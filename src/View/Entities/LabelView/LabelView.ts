@@ -98,6 +98,30 @@ export namespace LabelView {
             this.svgElement.appendChild(highLightElement);
             this.svgElement.appendChild(annotationElement);
             this.svgElement.appendChild(bracketElement);
+
+            if (this.store.category.borderBottom) {
+                // 新增波浪线
+                const borderBottom = this.store.category.borderBottom
+                const lineElement = document.createElementNS(SVGNS, 'path') as SVGPathElement;
+                lineElement.setAttribute('fill', 'none')
+                lineElement.setAttribute('stroke', borderBottom)
+                lineElement.setAttribute('stroke-width', '1');
+                let str = ''
+                let num = this.highLightWidth / 5
+                for (let i = 0; i < num; i++) {
+                    if (i === 0) {
+                        str = 'c 2.3906 0 2.3906 -3 5 -3'
+                    } else {
+                        if (i%2 === 0) {
+                            str = str + ' s 2.3906 -3 5 -3'
+                        } else {
+                            str = str + ' s 2.3906 3 5 3'
+                        }
+                    }
+                }
+                lineElement.setAttribute('d', `M 0 ${this.lineIn.view.contentFont.lineHeight + 3} ${str}`)
+                this.svgElement.appendChild(lineElement)            
+            }
             return this.svgElement;
         }
 

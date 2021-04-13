@@ -8,6 +8,8 @@ export namespace LabelCategory {
         readonly color?: string;
         readonly borderColor?: string;
         readonly "border-color"?: string;
+        readonly borderBottom?: string;
+        readonly "border-bottom"?: string
     }
 
     export interface Entity {
@@ -15,6 +17,7 @@ export namespace LabelCategory {
         readonly text: string;
         readonly color: string;
         readonly borderColor: string;
+        readonly borderBottom: string;
     }
 
     export class Repository extends Base.Repository<Entity> {
@@ -27,9 +30,13 @@ export namespace LabelCategory {
     export namespace Factory {
         export function create(json: JSON, defaultColor: string): Entity {
             let borderColor = json.borderColor;
+            let borderBottom = json.borderBottom;
             let color = json.color;
             if (!(json.borderColor) && json["border-color"]) {
                 borderColor = json["border-color"];
+            }
+            if (!(json.borderBottom) && json["border-bottom"]) {
+                borderBottom = json["border-bottom"]
             }
             if (!(json.color)) {
                 color = defaultColor;
@@ -41,7 +48,8 @@ export namespace LabelCategory {
                 id: json.id,
                 text: json.text,
                 color: color!,
-                borderColor: borderColor!
+                borderColor: borderColor!,
+                borderBottom: borderBottom!,
             };
         }
 

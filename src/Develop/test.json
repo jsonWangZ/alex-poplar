@@ -9,13 +9,13 @@
     },
     {
       "id": 8,
-      "text": "动词",
-      "color": "#619dff",
-      "borderColor": "#436db2"
+      "text": "",
+      "borderColor": "#436db2",
+      "borderBottom": "#000"
     },
     {
       "id": 2,
-      "text": "超长标签超长标签超长标签",
+      "text": "超长标签",
       "color": "#9d61ff",
       "borderColor": "#6d43b2"
     },
@@ -27,6 +27,18 @@
     }
   ],
   "labels": [
+    {
+      "id": 0,
+      "categoryId": 8,
+      "startIndex": 0,
+      "endIndex": 12
+    },
+    {
+      "id": 1,
+      "categoryId": 2,
+      "startIndex": 16,
+      "endIndex": 18
+    }
   ],
   "connectionCategories": [
     {
@@ -42,5 +54,12 @@
       "text": "是...的动作"
     }
   ],
-  "connections": []
+  "connections": [
+    {
+      "id": 0,
+      "categoryId": 0,
+      "fromId": 0,
+      "toId": 1
+    }
+  ]
 }
