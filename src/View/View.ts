@@ -105,7 +105,9 @@ export class View {
         const labels = this.store.labelRepo.getEntitiesInRange(line.startIndex, line.endIndex);
         const labelViews = labels.map(it => new LabelView.Entity(it, line.topContext, this.config));
         labelViews.map(it => this.labelViewRepository.add(it));
-        labelViews.map(it => line.topContext.addChild(it));
+        labelViews.map(it => {
+            return line.topContext.addChild(it, !!it.store.category.text)
+        });
         return labelViews;
     }
 
@@ -115,7 +117,9 @@ export class View {
             const connections = label.sameLineConnections.filter(it => !this.connectionViewRepository.has(it.id!));
             const connectionViews = connections.map(it => new ConnectionView.Entity(it, line.topContext, this.config));
             connectionViews.map(it => this.connectionViewRepository.add(it));
-            connectionViews.map(it => line.topContext.addChild(it));
+            connectionViews.map(it => {
+                return line.topContext.addChild(it, true)
+            });
             return connectionViews;
         }).reduce((a, b) => a.concat(b), []);
     }
@@ -241,7 +245,7 @@ export class View {
             const line = this.lines[startInLineIndex];
             const labelView = new LabelView.Entity(label, line.topContext, this.config);
             this.labelViewRepository.add(labelView);
-            line.topContext.addChild(labelView);
+            line.topContext.addChild(labelView, false);
             line.topContext.renderChild(labelView);
             line.topContext.update();
             line.update();
@@ -275,7 +279,7 @@ export class View {
         const context = sameLineLabelView.lineIn.topContext;
         const connectionView = new ConnectionView.Entity(connection, context, this.config);
         this.connectionViewRepository.add(connectionView);
-        context.addChild(connectionView);
+        context.addChild(connectionView, true);
         context.renderChild(connectionView);
         context.update();
         sameLineLabelView.lineIn.update();

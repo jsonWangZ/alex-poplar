@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-04-13 14:32:06
+ * @LastEditTime: 2021-04-22 11:07:03
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /plugins/alex-poplar/src/View/Entities/Line/TopContext/TopContext.ts
+ */
 import {Line} from "../Line";
 import {SVGNS} from "../../../../Infrastructure/SVGNS";
 import {overLaps, TopContextUser} from "./TopContextUser";
@@ -51,22 +59,24 @@ export class TopContext {
         return [this.svgElement, this.backgroundElement];
     }
 
-    addChild(child: TopContextUser): number {
+    addChild(child: TopContextUser, flag: Boolean): number {
         const oldLayer = this.layer;
         let hasOverlapping = false;
         if (child instanceof ConnectionView.Entity) {
             child.layer = child.sameLineLabelView.layer;
         }
-        do {
-            ++child.layer;
-            hasOverlapping = false;
-            for (let otherEntity of this.children) {
-                if (overLaps(child, otherEntity)) {
-                    hasOverlapping = true;
-                    break;
+        if (flag) {
+            do {
+                ++child.layer;
+                hasOverlapping = false;
+                for (let otherEntity of this.children) {
+                    if (overLaps(child, otherEntity)) {
+                        hasOverlapping = true;
+                        break;
+                    }
                 }
-            }
-        } while (hasOverlapping);
+            } while (hasOverlapping);
+        }
         this.children.add(child);
         const newLayer = this.layer;
         return newLayer - oldLayer;

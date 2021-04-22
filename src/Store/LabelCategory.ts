@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-04-13 14:32:06
+ * @LastEditTime: 2021-04-22 14:05:41
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /plugins/alex-poplar/src/Store/LabelCategory.ts
+ */
 import {Base} from "../Infrastructure/Repository";
 import {shadeColor} from "../Infrastructure/Color";
 
@@ -9,7 +17,8 @@ export namespace LabelCategory {
         readonly borderColor?: string;
         readonly "border-color"?: string;
         readonly borderBottom?: string;
-        readonly "border-bottom"?: string
+        readonly "border-bottom"?: string;
+        readonly "background"?: string
     }
 
     export interface Entity {
@@ -18,6 +27,7 @@ export namespace LabelCategory {
         readonly color: string;
         readonly borderColor: string;
         readonly borderBottom: string;
+        readonly background: string
     }
 
     export class Repository extends Base.Repository<Entity> {
@@ -32,6 +42,7 @@ export namespace LabelCategory {
             let borderColor = json.borderColor;
             let borderBottom = json.borderBottom;
             let color = json.color;
+            let background = json.background
             if (!(json.borderColor) && json["border-color"]) {
                 borderColor = json["border-color"];
             }
@@ -50,6 +61,7 @@ export namespace LabelCategory {
                 color: color!,
                 borderColor: borderColor!,
                 borderBottom: borderBottom!,
+                background: background!,
             };
         }
 

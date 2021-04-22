@@ -14,7 +14,7 @@ export namespace ConnectionView {
   }
 
   export class Entity extends TopContextUser {
-    private svgElement: SVGGElement = null as any;
+    svgElement: SVGGElement = null as any;
     private lineElement: SVGPathElement = null as any;
 
     constructor(

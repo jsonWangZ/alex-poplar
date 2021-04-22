@@ -17,7 +17,7 @@ export namespace LabelView {
 
     export class Entity extends TopContextUser {
         layer: number = 0;
-        private svgElement: SVGGElement = null as any;
+        svgElement: SVGGElement = null as any;
 
         constructor(
             readonly store: Label.Entity,
@@ -90,14 +90,21 @@ export namespace LabelView {
         render(): SVGGElement {
             this.svgElement = document.createElementNS(SVGNS, 'g') as SVGGElement;
             this.svgElement.classList.add(...this.config.labelClasses);
-            const highLightElement = this.createHighLightElement();
-            const annotationElement = this.createAnnotationElement();
-            const y = this.view.topContextLayerHeight * (this.layer - 1);
-            const bracketElement = this.createBracketElement(this.highLightWidth, -y, 0, -y, this.config.bracketWidth);
-
-            this.svgElement.appendChild(highLightElement);
-            this.svgElement.appendChild(annotationElement);
-            this.svgElement.appendChild(bracketElement);
+            if (this.store.category.background) {
+                const highLightElement = this.createHighLightElement();
+                this.svgElement.appendChild(highLightElement);
+            } else {
+                if (this.store.category.text) {
+                    const highLightElement = this.createHighLightElement();
+                    const annotationElement = this.createAnnotationElement();
+                    const y = this.view.topContextLayerHeight * (this.layer - 1);
+                    const bracketElement = this.createBracketElement(this.highLightWidth, -y, 0, -y, this.config.bracketWidth);
+        
+                    this.svgElement.appendChild(highLightElement);
+                    this.svgElement.appendChild(annotationElement);
+                    this.svgElement.appendChild(bracketElement);
+                }
+            }
 
             if (this.store.category.borderBottom) {
                 // 新增波浪线
