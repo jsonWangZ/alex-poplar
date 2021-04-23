@@ -99,10 +99,15 @@ export namespace LabelView {
                     const annotationElement = this.createAnnotationElement();
                     const y = this.view.topContextLayerHeight * (this.layer - 1);
                     const bracketElement = this.createBracketElement(this.highLightWidth, -y, 0, -y, this.config.bracketWidth);
-        
+                    const closeElement = this.createCloseElement()
+                    const closeLeftElement = this.createCloseLeftLine()
+                    const closeRightElement = this.createCloseRightLine()
                     this.svgElement.appendChild(highLightElement);
                     this.svgElement.appendChild(annotationElement);
                     this.svgElement.appendChild(bracketElement);
+                    this.svgElement.appendChild(closeElement)
+                    this.svgElement.appendChild(closeLeftElement)
+                    this.svgElement.appendChild(closeRightElement)
                 }
             }
 
@@ -147,6 +152,49 @@ export namespace LabelView {
             highLightElement.setAttribute('width', this.highLightWidth.toString());
             highLightElement.setAttribute('fill', /^#/g.test(color) ? addAlpha(color, 70) : color);
             return highLightElement;
+        }
+
+        private createCloseElement () {
+            // 画个圆
+            const result = document.createElementNS(SVGNS, 'circle')
+            result.style.transform = `translate(${(this.highLightWidth - this.labelWidth) / 2 + this.labelWidth}px,${this.annotationY}px)`;
+            result.setAttribute('r', '6')
+            result.setAttribute('stroke', 'black')
+            result.setAttribute('stroke-width', '1')
+            result.setAttribute('fill', '#ffffff')
+            result.style.cursor = 'pointer'
+            result.onclick = (event: MouseEvent) => {
+                this.view.root.emit('labelCloseClicked', this.id, event)
+            }
+            return result
+        }
+
+        private createCloseLeftLine () {
+            const closeLeftLine = document.createElementNS(SVGNS, 'path')
+            closeLeftLine.setAttribute('class', 'line')
+            closeLeftLine.setAttribute('fill', 'none')
+            closeLeftLine.setAttribute('stroke', 'black')
+            closeLeftLine.setAttribute('stroke-width', '1')
+            closeLeftLine.style.cursor = 'pointer'
+            closeLeftLine.setAttribute('d', `M${(this.highLightWidth - this.labelWidth) / 2 + this.labelWidth - 2},${this.annotationY + 2},${(this.highLightWidth - this.labelWidth) / 2 + this.labelWidth + 2},${this.annotationY - 2}`)
+            closeLeftLine.onclick = (event: MouseEvent) => {
+                this.view.root.emit('labelCloseClicked', this.id, event)
+            }
+            return closeLeftLine
+        }
+
+        private createCloseRightLine () {
+            const closeRightLine = document.createElementNS(SVGNS, 'path')
+            closeRightLine.setAttribute('class', 'line')
+            closeRightLine.setAttribute('fill', 'none')
+            closeRightLine.setAttribute('stroke', 'black')
+            closeRightLine.setAttribute('stroke-width', '1')
+            closeRightLine.style.cursor = 'pointer'
+            closeRightLine.setAttribute('d', `M${(this.highLightWidth - this.labelWidth) / 2 + this.labelWidth - 2},${this.annotationY - 2},${(this.highLightWidth - this.labelWidth) / 2 + this.labelWidth + 2},${this.annotationY + 2}`)
+            closeRightLine.onclick = (event: MouseEvent) => {
+                this.view.root.emit('labelCloseClicked', this.id, event)
+            }
+            return closeRightLine
         }
 
         /**

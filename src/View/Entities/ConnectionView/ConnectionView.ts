@@ -134,6 +134,7 @@ export namespace ConnectionView {
         this.lineElement.classList.remove('hover');
       };
       this.renderLine();
+      this.renderLineClose();
       return this.svgElement;
     }
 
@@ -209,6 +210,45 @@ export namespace ConnectionView {
       this.lineElement.style.markerEnd = 'url(#marker-arrow)';
       this.updateLine();
       this.contextIn.backgroundElement.appendChild(this.lineElement);
+    }
+
+    private renderLineClose() {
+      const thisY = this.globalY + this.view.topContextLayerHeight / 2 -
+          this.view.labelFont.fontSize + 2;
+      // 画个圆
+      const result = document.createElementNS(SVGNS, 'circle')
+      result.style.transform = `translate(${this.toLabelView.labelLeft + this.toLabelView.labelWidth + 6}px,${thisY}px)`;
+      result.setAttribute('r', '6')
+      result.setAttribute('stroke', 'black')
+      result.setAttribute('stroke-width', '1')
+      result.setAttribute('fill', '#ffffff')
+      result.style.cursor = 'pointer'
+      result.onclick = (event: MouseEvent) => {
+          this.view.root.emit('connectionCloseClicked', this.id, event)
+      }
+      this.contextIn.backgroundElement.appendChild(result)
+      const closeLeftLine = document.createElementNS(SVGNS, 'path')
+      closeLeftLine.setAttribute('class', 'line')
+      closeLeftLine.setAttribute('fill', 'none')
+      closeLeftLine.setAttribute('stroke', 'black')
+      closeLeftLine.setAttribute('stroke-width', '1')
+      closeLeftLine.style.cursor = 'pointer'
+      closeLeftLine.setAttribute('d', `M${this.toLabelView.labelLeft + this.toLabelView.labelWidth + 6 - 2},${thisY + 2},${this.toLabelView.labelLeft + this.toLabelView.labelWidth + 6 + 2},${thisY - 2}`)
+      closeLeftLine.onclick = (event: MouseEvent) => {
+        this.view.root.emit('connectionCloseClicked', this.id, event)
+      }
+      this.contextIn.backgroundElement.appendChild(closeLeftLine)
+      const closeRightLine = document.createElementNS(SVGNS, 'path')
+      closeRightLine.setAttribute('class', 'line')
+      closeRightLine.setAttribute('fill', 'none')
+      closeRightLine.setAttribute('stroke', 'black')
+      closeRightLine.setAttribute('stroke-width', '1')
+      closeRightLine.style.cursor = 'pointer'
+      closeRightLine.setAttribute('d', `M${this.toLabelView.labelLeft + this.toLabelView.labelWidth + 6 - 2},${thisY - 2},${this.toLabelView.labelLeft + this.toLabelView.labelWidth + 6 + 2},${thisY + 2}`)
+      closeRightLine.onclick = (event: MouseEvent) => {
+        this.view.root.emit('connectionCloseClicked', this.id, event)
+      }
+      this.contextIn.backgroundElement.appendChild(closeRightLine)
     }
   }
 

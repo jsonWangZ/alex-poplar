@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-04-13 14:32:06
+ * @LastEditTime: 2021-04-22 16:59:54
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /work/alex/plugins/alex-poplar/src/Infrastructure/Repository.ts
+ */
 import {assert} from "./Assert";
 import {EventEmitter} from "events";
 
@@ -73,7 +81,8 @@ export namespace Base {
                 this.emit('removed', theDeleted);
                 return true;
             } else if (typeof key !== 'number' && 'id' in key) {
-                return this.delete((key as any).id);
+                // return this.delete((key as any).id);
+                return true
             }
             return false;
         }

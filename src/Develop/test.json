@@ -12,7 +12,7 @@
       "text": "",
       "borderColor": "#436db2",
       "borderBottom": "#000",
-      "background": "#73BFFFF"
+      "background": "#73BFFF"
     },
     {
       "id": 9,
@@ -35,9 +35,8 @@
     {
       "id": 3,
       "text": "",
-      "color": "#9d61ff",
-      "highLight": "#9d61ff",
-      "background": "#73BFFFF"
+      "color": "#73BFFF",
+      "background": "#73BFFF"
     }
   ],
   "labels": [

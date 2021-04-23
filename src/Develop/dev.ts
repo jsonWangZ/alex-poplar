@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-04-22 14:09:45
+ * @LastEditTime: 2021-04-22 15:57:43
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /work/alex/plugins/alex-poplar/src/Develop/dev.ts
+ */
 import {Annotator} from "../Annotator";
 // @ts-ignore
 import * as data from "./test.json";
@@ -8,7 +16,12 @@ import {Content} from "../Action/Content";
 
 window.onload = function () {
     (window as any).annotator = new Annotator(data, document.getElementById("container")!, {
-        connectionWidthCalcMethod: "line"
+        connectionWidthCalcMethod: "line",
+        contentEditable: false,
+        allowMultipleLabel: 'notAllowed', // 是否允许同一位置的多个Label
+        allowMultipleConnection: 'notAllowed', // 是否允许连接同两个Label的多个Connection
+        labelOpacity: 100,
+        selectingAreaStrip: null
     });
     ((window as any).annotator as EventEmitter).on('textSelected', (startIndex: number, endIndex: number) => {
         console.log(startIndex, endIndex);

@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-04-13 14:32:06
+ * @LastEditTime: 2021-04-22 16:54:11
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /work/alex/plugins/alex-poplar/src/Action/Label.ts
+ */
 import {IAction} from "./IAction";
 import {Store} from "../Store/Store";
 import {Label as LabelModel} from "../Store/Label";

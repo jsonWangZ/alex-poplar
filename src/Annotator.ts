@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-04-13 14:32:06
+ * @LastEditTime: 2021-04-22 17:10:31
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /work/alex/plugins/alex-poplar/src/Annotator.ts
+ */
 import {EventEmitter} from "events";
 import {JSON as StoreJSON, Store} from "./Store/Store";
 import {View} from "./View/View";
