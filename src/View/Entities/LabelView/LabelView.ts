@@ -99,15 +99,9 @@ export namespace LabelView {
                     const annotationElement = this.createAnnotationElement();
                     const y = this.view.topContextLayerHeight * (this.layer - 1);
                     const bracketElement = this.createBracketElement(this.highLightWidth, -y, 0, -y, this.config.bracketWidth);
-                    const closeElement = this.createCloseElement()
-                    const closeLeftElement = this.createCloseLeftLine()
-                    const closeRightElement = this.createCloseRightLine()
                     this.svgElement.appendChild(highLightElement);
                     this.svgElement.appendChild(annotationElement);
                     this.svgElement.appendChild(bracketElement);
-                    this.svgElement.appendChild(closeElement)
-                    this.svgElement.appendChild(closeLeftElement)
-                    this.svgElement.appendChild(closeRightElement)
                 }
             }
 
@@ -162,9 +156,19 @@ export namespace LabelView {
             result.setAttribute('stroke', 'black')
             result.setAttribute('stroke-width', '1')
             result.setAttribute('fill', '#ffffff')
+            result.setAttribute('class', 'alexPoplarCloseIcon')
             result.style.cursor = 'pointer'
             result.onclick = (event: MouseEvent) => {
                 this.view.root.emit('labelCloseClicked', this.id, event)
+            }
+            result.onmouseleave = (event: MouseEvent) => {
+                const elements = this.svgElement.getElementsByClassName('alexPoplarCloseIcon')
+                if (elements) {
+                    const arr = Array.from(elements)
+                    for (let i of arr) {
+                        this.svgElement.removeChild(i)
+                    }
+                }
             }
             return result
         }
@@ -175,11 +179,9 @@ export namespace LabelView {
             closeLeftLine.setAttribute('fill', 'none')
             closeLeftLine.setAttribute('stroke', 'black')
             closeLeftLine.setAttribute('stroke-width', '1')
-            closeLeftLine.style.cursor = 'pointer'
+            closeLeftLine.setAttribute('class', 'alexPoplarCloseIcon')
+            closeLeftLine.style.pointerEvents = 'none'
             closeLeftLine.setAttribute('d', `M${(this.highLightWidth - this.labelWidth) / 2 + this.labelWidth - 2},${this.annotationY + 2},${(this.highLightWidth - this.labelWidth) / 2 + this.labelWidth + 2},${this.annotationY - 2}`)
-            closeLeftLine.onclick = (event: MouseEvent) => {
-                this.view.root.emit('labelCloseClicked', this.id, event)
-            }
             return closeLeftLine
         }
 
@@ -189,11 +191,9 @@ export namespace LabelView {
             closeRightLine.setAttribute('fill', 'none')
             closeRightLine.setAttribute('stroke', 'black')
             closeRightLine.setAttribute('stroke-width', '1')
-            closeRightLine.style.cursor = 'pointer'
+            closeRightLine.setAttribute('class', 'alexPoplarCloseIcon')
+            closeRightLine.style.pointerEvents = 'none'
             closeRightLine.setAttribute('d', `M${(this.highLightWidth - this.labelWidth) / 2 + this.labelWidth - 2},${this.annotationY - 2},${(this.highLightWidth - this.labelWidth) / 2 + this.labelWidth + 2},${this.annotationY + 2}`)
-            closeRightLine.onclick = (event: MouseEvent) => {
-                this.view.root.emit('labelCloseClicked', this.id, event)
-            }
             return closeRightLine
         }
 
@@ -242,6 +242,12 @@ export namespace LabelView {
             };
             annotationElement.onmouseenter = () => {
                 this.svgElement.classList.add("hover");
+                const closeElement = this.createCloseElement()
+                const closeLeftElement = this.createCloseLeftLine()
+                const closeRightElement = this.createCloseRightLine()
+                this.svgElement.appendChild(closeElement)
+                this.svgElement.appendChild(closeLeftElement)
+                this.svgElement.appendChild(closeRightElement)
                 Array.from(this.store.connectionsFrom)
                     .map(it => this.view.connectionViewRepository.get(it.id!))
                     .map(it => it.addHover("from"));
@@ -249,8 +255,17 @@ export namespace LabelView {
                     .map(it => this.view.connectionViewRepository.get(it.id!))
                     .map(it => it.addHover("to"));
             };
-            annotationElement.onmouseleave = () => {
+            annotationElement.onmouseleave = (e) => {
                 this.svgElement.classList.remove("hover");
+                const elements = this.svgElement.getElementsByClassName('alexPoplarCloseIcon')
+                if (elements) {
+                    const arr = Array.from(elements)
+                    if (!this.isHoverElement(e, arr[0])) {
+                        for (let i of arr) {
+                            this.svgElement.removeChild(i)
+                        }
+                    }
+                }
                 Array.from(this.store.connectionsFrom)
                     .map(it => this.view.connectionViewRepository.get(it.id!))
                     .map(it => it.removeHover("from"));
@@ -260,6 +275,19 @@ export namespace LabelView {
             };
 
             return annotationElement;
+        }
+        isHoverElement (e: MouseEvent, ele: Element) {
+            const x = e.clientX;
+            const y = e.clientY;
+            const rect = ele.getBoundingClientRect()
+            const divx1 = rect.left;
+            const divy1 = rect.top;
+            const divx2 = rect.right;
+            const divy2 = rect.bottom;
+            if( x < divx1 || x > divx2 || y < divy1 || y > divy2) {
+                return false
+            }
+            return true
         }
     }
 
