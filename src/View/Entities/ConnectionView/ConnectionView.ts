@@ -215,9 +215,16 @@ export namespace ConnectionView {
     private renderLineClose() {
       const thisY = this.globalY + this.view.topContextLayerHeight / 2 -
           this.view.labelFont.fontSize + 2;
+
+      let thisX = null
+      if (this.toLabelView.labelLeft > this.fromLabelView.labelRight) {
+        thisX = this.toLabelView.labelLeft + this.toLabelView.labelWidth + 6
+      } else {
+        thisX = this.fromLabelView.labelRight + 6
+      }
       // 画个圆
       const result = document.createElementNS(SVGNS, 'circle')
-      result.style.transform = `translate(${this.toLabelView.labelLeft + this.toLabelView.labelWidth + 6}px,${thisY}px)`;
+      result.style.transform = `translate(${thisX}px,${thisY}px)`;
       result.setAttribute('r', '6')
       result.setAttribute('stroke', 'black')
       result.setAttribute('stroke-width', '1')
@@ -233,7 +240,7 @@ export namespace ConnectionView {
       closeLeftLine.setAttribute('stroke', 'black')
       closeLeftLine.setAttribute('stroke-width', '1')
       closeLeftLine.style.cursor = 'pointer'
-      closeLeftLine.setAttribute('d', `M${this.toLabelView.labelLeft + this.toLabelView.labelWidth + 6 - 2},${thisY + 2},${this.toLabelView.labelLeft + this.toLabelView.labelWidth + 6 + 2},${thisY - 2}`)
+      closeLeftLine.setAttribute('d', `M${thisX - 2},${thisY + 2},${thisX + 2},${thisY - 2}`)
       closeLeftLine.onclick = (event: MouseEvent) => {
         this.view.root.emit('connectionCloseClicked', this.id, event)
       }
@@ -244,7 +251,7 @@ export namespace ConnectionView {
       closeRightLine.setAttribute('stroke', 'black')
       closeRightLine.setAttribute('stroke-width', '1')
       closeRightLine.style.cursor = 'pointer'
-      closeRightLine.setAttribute('d', `M${this.toLabelView.labelLeft + this.toLabelView.labelWidth + 6 - 2},${thisY - 2},${this.toLabelView.labelLeft + this.toLabelView.labelWidth + 6 + 2},${thisY + 2}`)
+      closeRightLine.setAttribute('d', `M${thisX - 2},${thisY - 2},${thisX + 2},${thisY + 2}`)
       closeRightLine.onclick = (event: MouseEvent) => {
         this.view.root.emit('connectionCloseClicked', this.id, event)
       }

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-22 14:09:45
- * @LastEditTime: 2021-04-26 09:25:10
+ * @LastEditTime: 2021-04-26 17:57:57
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /work/alex/plugins/alex-poplar/src/Develop/dev.ts
@@ -16,15 +16,22 @@ import {Content} from "../Action/Content";
 
 window.onload = function () {
     (window as any).annotator = new Annotator(data, document.getElementById("container")!, {
-        connectionWidthCalcMethod: "line",
-        contentEditable: false,
-        allowMultipleLabel: 'notAllowed', // 是否允许同一位置的多个Label
+        // connectionWidthCalcMethod: "line",
+        // contentEditable: false,
+        // // allowMultipleLabel: 'notAllowed', // 是否允许同一位置的多个Label
+        // allowMultipleConnection: 'notAllowed', // 是否允许连接同两个Label的多个Connection
+        // labelOpacity: 100,
+        // selectingAreaStrip: null
+
+        // lineHeight: 2,
+        contentEditable: true,
+        // allowMultipleLabel: 'notAllowed', // 是否允许同一位置的多个Label
         allowMultipleConnection: 'notAllowed', // 是否允许连接同两个Label的多个Connection
         labelOpacity: 100,
+        unconnectedLineStyle: 'curve', // 点击一个Label时显示的连接线
         selectingAreaStrip: null
     });
     ((window as any).annotator as EventEmitter).on('textSelected', (startIndex: number, endIndex: number) => {
-        console.log(startIndex, endIndex);
         (window as any).annotator.applyAction(Label.Create(0, startIndex, endIndex));
     });
     ((window as any).annotator as EventEmitter).on('labelClicked', (labelId: number) => {
