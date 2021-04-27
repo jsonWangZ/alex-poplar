@@ -93,10 +93,13 @@ export namespace Line {
             this.svgElement.innerHTML = this.content.replace(/ /g, "&nbsp;")
                 .replace(/</g, "&lt;")
                 .replace(/>/g, "&gt;");
-            if (this.isBlank) {
-                this.svgElement.style.fontSize = `${this.view.contentFont.fontSize / 4}px`;
+                if (this.isBlank) {
+                    this.svgElement.style.fontSize = `${this.view.contentFont.fontSize / 4}px`;
+                }
+            const x = this.view.paddingLeft.toString()
+            if (x !== '-Infinity') {
+                this.svgElement.setAttribute("x", x);
             }
-            this.svgElement.setAttribute("x", this.view.paddingLeft.toString());
             this.svgElement.setAttribute("dy", this.dy.toString() + 'px');
         }
 

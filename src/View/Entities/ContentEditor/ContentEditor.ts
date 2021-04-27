@@ -140,6 +140,9 @@ export class ContentEditor {
 
     update() {
         const x = this.view.paddingLeft + this.view.contentFont.widthOf(this.line.content.slice(0, this.characterIndex));
+        if (x.toString() === '-Infinity') {
+            return
+        }
         this.cursorElement.setAttribute('d', `
             M${x},${this.line.y}
             L${x},${this.line.y + this.view.contentFont.lineHeight}
