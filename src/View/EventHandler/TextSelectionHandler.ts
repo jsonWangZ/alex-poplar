@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-04-13 14:32:06
+ * @LastEditTime: 2021-04-28 09:22:06
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /work/alex/plugins/alex-poplar/src/View/EventHandler/TextSelectionHandler.ts
+ */
 import {Annotator} from "../../Annotator";
 import {Line} from "../Entities/Line/Line";
 import {fromNullable} from "../../Infrastructure/Option";
@@ -62,8 +70,9 @@ export class TextSelectionHandler {
     textSelected() {
         let selectionInfo = this.getSelectionInfo();
         if (selectionInfo) {
+            console.log('22222 textSelected --》》 ', selectionInfo)
             this.root.emit('textSelected', selectionInfo.startIndex, selectionInfo.endIndex);
         }
-        window.getSelection()?.removeAllRanges();
+        // window.getSelection()?.removeAllRanges();
     }
 }

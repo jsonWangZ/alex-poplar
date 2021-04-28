@@ -96,6 +96,8 @@ export namespace Line {
                 if (this.isBlank) {
                     this.svgElement.style.fontSize = `${this.view.contentFont.fontSize / 4}px`;
                 }
+            // const x = '46.89896774291992'
+            // this.svgElement.setAttribute("x", x);
             const x = this.view.paddingLeft.toString()
             if (x !== '-Infinity') {
                 this.svgElement.setAttribute("x", x);

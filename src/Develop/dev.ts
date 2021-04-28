@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-04-22 14:09:45
- * @LastEditTime: 2021-04-26 17:57:57
+ * @LastEditTime: 2021-04-28 09:15:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /work/alex/plugins/alex-poplar/src/Develop/dev.ts
@@ -32,7 +32,7 @@ window.onload = function () {
         selectingAreaStrip: null
     });
     ((window as any).annotator as EventEmitter).on('textSelected', (startIndex: number, endIndex: number) => {
-        (window as any).annotator.applyAction(Label.Create(0, startIndex, endIndex));
+        // (window as any).annotator.applyAction(Label.Create(0, startIndex, endIndex));
     });
     ((window as any).annotator as EventEmitter).on('labelClicked', (labelId: number) => {
         console.log(labelId);
