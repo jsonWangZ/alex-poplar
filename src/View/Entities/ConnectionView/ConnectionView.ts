@@ -217,7 +217,7 @@ export namespace ConnectionView {
           this.view.labelFont.fontSize + 2;
 
       let thisX = null
-      if (this.toLabelView.labelLeft > this.fromLabelView.labelRight) {
+      if ((this.toLabelView.labelLeft + this.toLabelView.labelWidth) > this.fromLabelView.labelRight) {
         thisX = this.toLabelView.labelLeft + this.toLabelView.labelWidth + 6
       } else {
         thisX = this.fromLabelView.labelRight + 6

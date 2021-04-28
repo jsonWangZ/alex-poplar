@@ -69,6 +69,18 @@
       "categoryId": 9,
       "startIndex": 16,
       "endIndex": 18
+    },
+    {
+      "id": 14,
+      "categoryId": 0,
+      "startIndex": 236,
+      "endIndex": 239
+    },
+    {
+      "id": 15,
+      "categoryId": 0,
+      "startIndex": 270,
+      "endIndex": 273
     }
   ],
   "connectionCategories": [
@@ -91,6 +103,12 @@
       "categoryId": 0,
       "fromId": 0,
       "toId": 1
+    },
+    {
+      "id": 1,
+      "categoryId": 0,
+      "fromId": 14,
+      "toId": 15
     }
   ]
 }
