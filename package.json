@@ -1,6 +1,6 @@
 {
   "name": "alex-poplar",
-  "version": "2.1.10",
+  "version": "2.1.11",
   "description": "web-based annotation tool for natural language processing (NLP) needs, inspired by brat rapid annotation tool.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
